@@ -1,8 +1,9 @@
 # tryout-react
-Build a simple React App
+This is a mini-course which aims to build a simple ReactJS App.  It is aimed at beginners of React who want to try it out.  I don't assume any previous experience with React.
 
+For this course I will use WebStorm (a popular IDE from JetBrains) to edit, build and debug React applications.  The steps below explain how to set up you development environment with WebStorm, NodeJS and React.
 
-# Creating a new React Project
+## Setting up a Development Environment
 
 1. Install WebStorm via https://www.jetbrains.com/webstorm/download/ (there is a 30 day free evaluation)
 2. Select New Project and choose React App.  In the Location field, type over the 'untitled' text to give your new project the name  e.g. 'tryout-react' (note: it has to be in lower case).  Select the Create TypeScript Project checkbox.
@@ -14,6 +15,8 @@ Click on Create. This will download and install NodeJS and setup a simple react 
 4. When you run `npm start` it will start a development server running on your local machine which defaults to port 3000.  This will live-compile the application so any edits you make to it will be reflected immediately in the browser.
 
 You can try this now: just open the App.tsx file and change the message between the `<p></p>` tags.  Hit Ctrl-S (or Cmd-S) to save the file and it will imediately update in the browser.
+
+## How it works
 
 This uses Babel (A transpiler for ES6/JSX to regular JavaScript) to do compilation 'on the fly' on the development machine and then serve this to the browser.  In this mode any changes to your source files are detected by a file watcher process which triggers a re-compile and reload in the browser. 
 
