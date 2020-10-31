@@ -18,7 +18,6 @@ body {
 }
 #rocket-takeoff-wrapper {
   height: 100vh;
-  animation: 10s rocketTakeOff 2s forwards cubic-bezier(.97,.37,.26,.3);
 }
 #rocket-wrapper {
   position: absolute;
@@ -35,7 +34,6 @@ body {
   bottom: -10px;
   width: 100vw;
   z-index: -10;
-  animation: 5s earthLeave 2s forwards;
 }
 #sky {
   position: absolute;
@@ -46,7 +44,6 @@ body {
   border-radius: 50%;
   height: 300vh;
   width: 200vw;
-  animation: 8s earthLeave 5s forwards;
 }
 
 @keyframes rocketTakeOff {
@@ -74,7 +71,6 @@ body {
   align-items: center;
   transform: translatex(-11%);
   opacity: 0;
-  animation: 500ms fadein 1s forwards;
 }
 
 @keyframes fadein {
@@ -87,7 +83,6 @@ body {
 }
 .flame-wrapper {
   position: relative;
-  animation: flicker 600ms ease-in infinite;
 }
 .flame {
   bottom: 0;
@@ -145,7 +140,6 @@ body {
   height: 100%;
   z-index: -30;
   top: 0;
-  animation: 20s moveStars linear infinite;
 }
 .star {
   position: absolute;
