@@ -9,7 +9,12 @@ const ignitionAnimation = {
     },
 };
 
-const Rocket = () => (
+export enum RocketCommands {
+    STANDBY="STANDBY",
+    IGNITION_START="IGNITION_START"
+};
+
+const Rocket = ({command}: {command: RocketCommands}) => (
         <div id="rocket-wrapper">
             <svg id="rocket" viewBox="0 0 251.5 396">
                 <path id="Right_Fin" data-name="Right Fin" d="M1328.2,674.1s78.2,0,78.2,31.3S1422,846,1422,846s-46.9-156.3-93.8-125S1312.6,689.7,1328.2,674.1Z" transform="translate(-1170.5 -450)" fill="#314d51"/>
@@ -30,8 +35,8 @@ const Rocket = () => (
                 <path id="Middle_Fin" data-name="Middle Fin" d="M1312.4,679.8c0-7.6-7.4-13.8-16.4-13.8s-16.4,6.2-16.4,13.8S1296,846,1296,846,1312.4,687.5,1312.4,679.8Z" transform="translate(-1170.5 -450)" fill="#314d51"/>
                 <path d="M1260,792" transform="translate(-1170.5 -450)" fill="#314d51"/>
             </svg>
-            <div className="thruster" style={ignitionAnimation.thruster}>
-                <div className="flame-wrapper" style={ignitionAnimation.flames}>
+            <div className="thruster" style={command === RocketCommands.IGNITION_START? ignitionAnimation.thruster : {}}>
+                <div className="flame-wrapper" style={command === RocketCommands.IGNITION_START? ignitionAnimation.flames : {}}>
                     <div className="flame red"></div>
                     <div className="flame orange"></div>
                     <div className="flame gold"></div>
