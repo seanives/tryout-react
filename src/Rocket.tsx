@@ -1,4 +1,5 @@
 import React from 'react';
+import RocketCommands from "./RocketCommands";
 
 const ignitionAnimation = {
     thruster: {
@@ -7,11 +8,6 @@ const ignitionAnimation = {
     flames: {
         animation: "flicker 600ms ease-in infinite"
     },
-};
-
-export enum RocketCommands {
-    STANDBY="STANDBY",
-    IGNITION_START="IGNITION_START"
 };
 
 const Rocket = ({command}: {command: RocketCommands}) => (

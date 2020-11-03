@@ -1,20 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import Rocket, {RocketCommands} from "./Rocket";
+import Rocket from "./Rocket";
+import LaunchCommands from "./LaunchCommands";
+import RocketLauncherInterface from "./RocketLauncherInterface";
+import RocketCommands from "./RocketCommands";
 
 const Stars = ({stars}: { stars: JSX.Element[] }) => <div>{stars}</div>;
 
-enum LaunchCommands {
-    STANDBY="STANDBY",
-    IGNITION_START="IGNITION_START",
-    TAKEOFF="TAKEOFF"
-};
-
-
-const Star = ({positionX, launchCommand}: { positionX: number; launchCommand: LaunchCommands; }) => {
+const Star = ({positionX, launchState}: { positionX: number; launchState: LaunchCommands; }) => {
     let starChoice: number = Math.random();
     if (starChoice <= .5) {
         return (
-            <div style={launchCommand === LaunchCommands.TAKEOFF? {left: positionX, ...takeoffAnimation.stars} : {}} className="star-wrapper">
+            <div style={launchState === LaunchCommands.TAKEOFF? {left: positionX, ...takeoffAnimation.stars} : {}} className="star-wrapper">
                 <svg className="star star1" viewBox="0 0 54 54">
                     <g>
                         <g>
@@ -27,7 +23,7 @@ const Star = ({positionX, launchCommand}: { positionX: number; launchCommand: La
         );
     } else {
         return (
-            <div style={launchCommand === LaunchCommands.TAKEOFF? {left: positionX, ...takeoffAnimation.stars} : {}} className="star-wrapper">
+            <div style={launchState === LaunchCommands.TAKEOFF? {left: positionX, ...takeoffAnimation.stars} : {}} className="star-wrapper">
                 <svg className="star star2" viewBox="0 0 18 18">
                     <g id="Layer_2" data-name="Layer 2">
                         <g id="Content">
@@ -55,26 +51,49 @@ const takeoffAnimation = {
     },
 };
 
-
-
-const RocketLauncher = () => {
+const RocketLauncher = ({command = LaunchCommands.STANDBY}: RocketLauncherInterface) => {
     const [stars, setStars] = useState(new Array<JSX.Element>());
-    const [rocketCommand, setRocketCommand] = useState(RocketCommands.STANDBY);
-    const [launchCommand, setLaunchCommand] = useState(LaunchCommands.STANDBY);
-    const onLaunch = (event: React.MouseEvent<HTMLButtonElement,MouseEvent>) => {
-        setLaunchCommand(LaunchCommands.TAKEOFF);
-    };
-    const onIgnition = (event: React.MouseEvent<HTMLButtonElement,MouseEvent>) => {
-        setLaunchCommand(LaunchCommands.IGNITION_START);
-        setRocketCommand(RocketCommands.IGNITION_START);
-    };
-    const Buttons = () => <><button onClick={onIgnition}>Ignition</button><button onClick={onLaunch}>Launch</button></>
+    const [rocketState, setRocketState] = useState(RocketCommands.STANDBY);
+    const [launchState, setLaunchState] = useState(LaunchCommands.STANDBY);
+    switch (command) {
+        case LaunchCommands.STANDBY:
+            if (launchState === LaunchCommands.TAKEOFF) {
+                console.log("Launch sequence error: Attempt to initiate STANDBY after TAKEOFF.");
+            } else {
+                if (launchState === LaunchCommands.IGNITION_START) {
+                    setLaunchState(LaunchCommands.STANDBY);
+                }
+                if (rocketState === RocketCommands.IGNITION_START) {
+                    setRocketState(RocketCommands.STANDBY);
+                }
+            }
+            break;
+        case LaunchCommands.IGNITION_START:
+            if (launchState === LaunchCommands.STANDBY) {
+                setLaunchState(LaunchCommands.IGNITION_START);
+                setRocketState(RocketCommands.IGNITION_START);
+            } else {
+                if (launchState !== LaunchCommands.IGNITION_START) {
+                    console.log("Launch sequence error: Attempt to initiate IGNITION after TAKEOFF.");
+                }
+            }
+            break;
+        case LaunchCommands.TAKEOFF:
+            if (launchState === LaunchCommands.IGNITION_START) {
+                setLaunchState(LaunchCommands.TAKEOFF);
+            } else {
+                if (launchState !== LaunchCommands.TAKEOFF) {
+                    console.log("Launch sequence error: Attempt to initiate TAKEOFF before IGNITION_START.");
+                }
+            }
+            break;
+    }
     useEffect(() => {
         let starCount: number = stars.length;
-        if (launchCommand === LaunchCommands.TAKEOFF) {
+        if (launchState === LaunchCommands.TAKEOFF) {
             let starLoop = setInterval(function () {
                 let x = Math.floor(window.innerWidth * Math.random());
-                let newStar = <Star key={starCount++} positionX={x} launchCommand={launchCommand}/>;
+                let newStar = <Star key={starCount++} positionX={x} launchState={launchState}/>;
                 setStars(starArray => [...starArray, newStar]);
                 if (starCount > 200) {
                     clearInterval(starLoop);
@@ -82,15 +101,14 @@ const RocketLauncher = () => {
             }, 200);
             return () => clearInterval(starLoop)
         }
-    }, [stars,launchCommand]);
+    }, [stars,launchState]);
     return (
         <div>
-            <Buttons />
             <div id="rocket-animation">
-                <div id="rocket-takeoff-wrapper" style={launchCommand === LaunchCommands.TAKEOFF? takeoffAnimation.rocket : {}}>
-                    <Rocket command={rocketCommand}/>
+                <div id="rocket-takeoff-wrapper" style={launchState === LaunchCommands.TAKEOFF? takeoffAnimation.rocket : {}}>
+                    <Rocket command={rocketState}/>
                 </div>
-                <svg id="planet" viewBox="0 0 2560 445" style={launchCommand === LaunchCommands.TAKEOFF? takeoffAnimation.planet : {}}>
+                <svg id="planet" viewBox="0 0 2560 445" style={launchState === LaunchCommands.TAKEOFF? takeoffAnimation.planet : {}}>
                     <g id="Layer_2" data-name="Layer 2">
                         <g id="Content">
                             <path d="M0,445H2560V355.3C2211.6,133.3,1765,0,1278,0,792.9,0,347.8,132.3,0,352.8Z"
@@ -98,7 +116,7 @@ const RocketLauncher = () => {
                         </g>
                     </g>
                 </svg>
-                <div id="sky" style={launchCommand === LaunchCommands.TAKEOFF? takeoffAnimation.sky: {}}/>
+                <div id="sky" style={launchState === LaunchCommands.TAKEOFF? takeoffAnimation.sky: {}}/>
             </div>
             <Stars stars={stars}/>
         </div>

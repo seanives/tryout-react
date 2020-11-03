@@ -45,6 +45,13 @@ body {
   height: 300vh;
   width: 200vw;
 }
+#countdown {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  color: white;
+}
 
 @keyframes rocketTakeOff {
   0% {
