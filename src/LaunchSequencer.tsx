@@ -4,7 +4,7 @@ import LaunchCommands from "./LaunchCommands";
 import CountdownModes from "./CountdownModes";
 import CountdownTimer from "./CountdownTimer";
 
-class App extends React.Component<any,{ launchCommand: LaunchCommands, countdownMode: CountdownModes }> {
+class LaunchSequencer extends React.Component<any,{ launchCommand: LaunchCommands, countdownMode: CountdownModes }> {
 
     constructor(props: any) {
         super(props);
@@ -24,4 +24,4 @@ class App extends React.Component<any,{ launchCommand: LaunchCommands, countdown
     }
 }
 
-export default App;
+export default LaunchSequencer;
