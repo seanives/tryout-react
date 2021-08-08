@@ -10,7 +10,11 @@ const ignitionAnimation = {
     },
 };
 
-const Rocket = ({command}: {command: RocketCommands}) => (
+interface RocketProps {
+    command: RocketCommands;
+}
+
+const Rocket = ({command}: RocketProps) => (
         <div id="rocket-wrapper">
             <svg id="rocket" viewBox="0 0 251.5 396">
                 <path id="Right_Fin" data-name="Right Fin" d="M1328.2,674.1s78.2,0,78.2,31.3S1422,846,1422,846s-46.9-156.3-93.8-125S1312.6,689.7,1328.2,674.1Z" transform="translate(-1170.5 -450)" fill="#314d51"/>

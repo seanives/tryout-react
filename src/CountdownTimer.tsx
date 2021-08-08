@@ -1,9 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import CountdownTimerInterface from "./CountdownTimerInterface";
-import CountdownModes from "./CountdownModes";
 import CountdownClock from "./CountdownClock";
+import CountdownModes from "./CountdownModes";
 
-const CountdownTimer = ({mode = CountdownModes.HOLDING, onTick}: CountdownTimerInterface) => {
+interface CountdownTimerProps {
+    readonly mode?: CountdownModes;
+    onTick?: (timeLeft: number) => void;
+}
+
+const CountdownTimer = ({mode = CountdownModes.HOLDING, onTick}: CountdownTimerProps) => {
 
     const [timeLeft,setTimeLeft] = useState(9);
     useEffect(() => {

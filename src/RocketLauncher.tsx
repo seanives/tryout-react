@@ -1,12 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import Rocket from "./Rocket";
 import LaunchCommands from "./LaunchCommands";
-import RocketLauncherInterface from "./RocketLauncherInterface";
 import RocketCommands from "./RocketCommands";
 
-const Stars = ({stars}: { stars: JSX.Element[] }) => <div>{stars}</div>;
+interface StarsProps {
+    stars: JSX.Element[];
+}
 
-const Star = ({positionX, launchState}: { positionX: number; launchState: LaunchCommands; }) => {
+const Stars = ({stars}: StarsProps) => <div>{stars}</div>;
+
+interface StarProps {
+    positionX: number;
+    launchState: LaunchCommands;
+}
+
+const Star = ({positionX, launchState}: StarProps) => {
     let starChoice: number = Math.random();
     if (starChoice <= .5) {
         return (
@@ -51,7 +59,11 @@ const takeoffAnimation = {
     },
 };
 
-const RocketLauncher = ({command = LaunchCommands.STANDBY}: RocketLauncherInterface) => {
+interface RocketLauncherProps {
+    readonly command?: string;
+}
+
+const RocketLauncher = ({command = LaunchCommands.STANDBY}: RocketLauncherProps) => {
     const [stars, setStars] = useState(new Array<JSX.Element>());
     const [rocketState, setRocketState] = useState(RocketCommands.STANDBY);
     const [launchState, setLaunchState] = useState(LaunchCommands.STANDBY);

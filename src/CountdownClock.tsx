@@ -1,6 +1,10 @@
 import React from 'react';
 
-const CountdownClock = ({timeLeft}: { timeLeft: number }) => {
+interface CountdownClockProps {
+    timeLeft: number;
+}
+
+const CountdownClock = ({timeLeft}: CountdownClockProps) => {
 
     const absTimeLeft = Math.abs(timeLeft);
     const hours =  Math.floor((absTimeLeft / (60 * 60)) % 24);

@@ -1,27 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import RocketLauncher from "./RocketLauncher";
 import LaunchCommands from "./LaunchCommands";
 import CountdownModes from "./CountdownModes";
 import CountdownTimer from "./CountdownTimer";
 
-class LaunchSequencer extends React.Component<any,{ launchCommand: LaunchCommands, countdownMode: CountdownModes }> {
+const LaunchSequencer = () => {
 
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            launchCommand: LaunchCommands.STANDBY,
-            countdownMode: CountdownModes.HOLDING
-        };
-    }
+    const [launchCommand, setLaunchCommand] = useState(LaunchCommands.STANDBY);
+    const [countdownMode, setCountdownMode] = useState(CountdownModes.HOLDING);
 
-    render() {
-        return (
-            <div>
-                <CountdownTimer mode={this.state.countdownMode}/>
-                <RocketLauncher command={this.state.launchCommand}/>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <CountdownTimer mode={countdownMode}/>
+            <RocketLauncher command={launchCommand}/>
+        </div>
+    );
 }
 
 export default LaunchSequencer;
