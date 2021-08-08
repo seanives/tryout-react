@@ -10,19 +10,8 @@ interface CountdownTimerProps {
 const CountdownTimer = ({mode = CountdownModes.HOLDING, onTick}: CountdownTimerProps) => {
 
     const [timeLeft,setTimeLeft] = useState(9);
-    useEffect(() => {
-       setTimeout(() => {
-           if (mode === CountdownModes.COUNTING) {
-               const decrementedTimeLeft = timeLeft - 1;
-               setTimeLeft(() => {
-                   if (onTick) {
-                       onTick(decrementedTimeLeft);
-                   }
-                   return decrementedTimeLeft;
-               });
-           }
-       }, 1000);
-    });
+
+    // TODO: implement timer logic here!
 
     return (
         <CountdownClock timeLeft={timeLeft}/>
